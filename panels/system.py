@@ -167,3 +167,5 @@ class Panel(ScreenPanel):
                     float(data["system_memory"]["used"])
                     / float(data["system_memory"]["total"])
                 )
+            else:
+                self.labels["memory_usage"].set_label(_("Memory") + ": N/A")
