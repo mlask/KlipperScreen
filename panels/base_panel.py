@@ -218,7 +218,10 @@ class BasePanel(ScreenPanel):
     def process_update(self, action, data):
         if action == "notify_proc_stat_update":
             cpu = data["system_cpu_usage"]["cpu"]
-            memory = (data["system_memory"]["used"] / data["system_memory"]["total"]) * 100
+            if data["system_memory"].get("total", -1) >= 0:
+                memory = (data["system_memory"]["used"] / data["system_memory"]["total"]) * 100
+            else:
+                memory = 0
             error = "message_popup_error"
             ctx = self.titlebar.get_style_context()
             msg = f"CPU: {cpu:2.0f}%    RAM: {memory:2.0f}%"

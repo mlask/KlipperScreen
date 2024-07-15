@@ -158,12 +158,12 @@ class Panel(ScreenPanel):
                 self.scales[f"cpu_usage_{i}"].set_fraction(
                     float(data["system_cpu_usage"][f"cpu{i}"]) / 100
                 )
-
-            self.labels["memory_usage"].set_label(
-                _("Memory")
-                + f': {(data["system_memory"]["used"] / data["system_memory"]["total"]) * 100:.0f}%'
-            )
-            self.scales["memory_usage"].set_fraction(
-                float(data["system_memory"]["used"])
-                / float(data["system_memory"]["total"])
-            )
+            if data["system_memory"].get("total", -1) > 0:
+                self.labels["memory_usage"].set_label(
+                    _("Memory")
+                    + f': {(data["system_memory"]["used"] / data["system_memory"]["total"]) * 100:.0f}%'
+                )
+                self.scales["memory_usage"].set_fraction(
+                    float(data["system_memory"]["used"])
+                    / float(data["system_memory"]["total"])
+                )
