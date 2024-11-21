@@ -16,6 +16,7 @@ class Panel(ScreenPanel):
     def __init__(self, screen, title):
         title = title or _("Job Status")
         super().__init__(screen, title)
+        self.thumb_dialog = None
         self.grid = Gtk.Grid(column_homogeneous=True)
         self.pos_z = 0.0
         self.extrusion = 100
@@ -25,19 +26,29 @@ class Panel(ScreenPanel):
         self.oheight = 0.0
         self.current_extruder = None
         self.fila_section = pi * ((1.75 / 2) ** 2)
-        self.filename_label = self.filename = self.prev_pos = self.prev_gpos = None
+        self.filename_label = None
+        self.filename = None
+        self.prev_pos = None
+        self.prev_gpos = None
         self.can_close = False
-        self.flow_timeout = self.animation_timeout = None
+        self.flow_timeout = None
+        self.animation_timeout = None
         self.file_metadata = self.fans = {}
         self.state = "standby"
         self.timeleft_type = "auto"
-        self.progress = self.zoffset = self.flowrate = self.vel = 0.0
+        self.progress = 0.0
+        self.zoffset = 0.0
+        self.flowrate = 0.0
+        self.vel = 0.0
         self.flowstore = []
         self.mm = _("mm")
         self.mms = _("mm/s")
         self.mms2 = _("mm/s²")
         self.mms3 = _("mm³/s")
-        self.status_grid = self.move_grid = self.time_grid = self.extrusion_grid = None
+        self.status_grid = None
+        self.move_grid = None
+        self.time_grid = None
+        self.extrusion_grid = None
 
         data = ['pos_x', 'pos_y', 'pos_z', 'time_left', 'duration', 'slicer_time', 'file_time',
                 'filament_time', 'est_time', 'speed_factor', 'req_speed', 'max_accel', 'extrude_factor', 'zoffset',
@@ -328,11 +339,16 @@ class Panel(ScreenPanel):
     def activate(self):
         if self.flow_timeout is None:
             self.flow_timeout = GLib.timeout_add_seconds(2, self.update_flow)
+        if self.animation_timeout is None:
+            self.animation_timeout = GLib.timeout_add(500, self.animate_label)
 
     def deactivate(self):
         if self.flow_timeout is not None:
             GLib.source_remove(self.flow_timeout)
             self.flow_timeout = None
+        if self.animation_timeout is not None:
+            GLib.source_remove(self.animation_timeout)
+            self.animation_timeout = None
 
     def create_buttons(self):
 
@@ -449,11 +465,12 @@ class Panel(ScreenPanel):
             self.buttons[arg].set_sensitive(False)
 
     def new_print(self):
-        self._screen.close_screensaver()
+        self._screen.screensaver.close()
         if "virtual_sdcard" in self._printer.data:
             logging.info("reseting progress")
             self._printer.data["virtual_sdcard"]["progress"] = 0
         self.update_progress(0.0)
+        self.set_state("printing")
 
     def process_update(self, action, data):
         if action == "notify_gcode_response":
@@ -700,10 +717,12 @@ class Panel(ScreenPanel):
         if self.state != state:
             logging.debug(f"Changing job_status state from '{self.state}' to '{state}'")
             self.state = state
+            if self.thumb_dialog:
+                self.close_dialog(self.thumb_dialog)
         self.show_buttons_for_state()
 
     def _add_timeout(self, timeout):
-        self._screen.close_screensaver()
+        self._screen.screensaver.close()
         if timeout != 0:
             GLib.timeout_add_seconds(timeout, self.close_panel)
 
@@ -775,17 +794,15 @@ class Panel(ScreenPanel):
             return
         image = Gtk.Image.new_from_pixbuf(pixbuf)
         image.set_vexpand(True)
-        self._gtk.Dialog(self.filename, None, image, self.close_fullscreen_thumbnail)
+        self.thumb_dialog = self._gtk.Dialog(self.filename, None, image, self.close_dialog)
 
-    def close_fullscreen_thumbnail(self, dialog, response_id):
+    def close_dialog(self, dialog=None, response_id=None):
         self._gtk.remove_dialog(dialog)
+        self.thumb_dialog = None
 
     def update_filename(self, filename):
         if not filename or filename == self.filename:
             return
-        if self.animation_timeout is not None:
-            GLib.source_remove(self.animation_timeout)
-            self.animation_timeout = None
 
         self.filename = filename
         logging.debug(f"Updating filename to {filename}")
@@ -794,18 +811,9 @@ class Panel(ScreenPanel):
             "complete": self.labels['file'].get_label(),
             "current": self.labels['file'].get_label(),
         }
-
-        if ellipsized := self.labels['file'].get_layout().is_ellipsized():
-            self.animation_timeout = GLib.timeout_add(500, self.animate_label)
-        else:
-            self.animation_timeout = None
-
         self.get_file_metadata()
 
     def animate_label(self):
-        if not self.filename_label or self.animation_timeout is None:
-            return False
-
         if ellipsized := self.labels['file'].get_layout().is_ellipsized():
             self.filename_label['current'] = self.filename_label['current'][1:]
             self.labels['file'].set_label(self.filename_label['current'] + " " * 6)
@@ -833,7 +841,7 @@ class Panel(ScreenPanel):
             self.labels["slicer_time"].set_label(self.format_time(self.file_metadata['estimated_time']))
         if "object_height" in self.file_metadata:
             self.oheight = float(self.file_metadata['object_height'])
-            self.labels['height'].set_label(f"{self.oheight} {self.mm}")
+            self.labels['height'].set_label(f"{self.oheight:.2f} {self.mm}")
         if "filament_total" in self.file_metadata:
             self.labels['filament_total'].set_label(f"{float(self.file_metadata['filament_total']) / 1000:.1f} m")
         if "job_id" in self.file_metadata and self.file_metadata['job_id']:

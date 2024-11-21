@@ -1,7 +1,21 @@
 # Changelog
-This just tracks the most notable changes, if you want all the details checkout the commit history. Probably all versions contain changes regarding documentation, translation, fixes and other minor refactors
+This just tracks the most notable changes, if you want all the details checkout the commit history.
+Probably all versions contain changes regarding documentation, translation, fixes and other minor refactors
 
-## Untagged
+## v0.4.5-*
+
+* menu buttons can have an 'active' status to change their appearance
+* basic lockscreen for shows or kids
+
+## v0.4.5  (Oct 28, 2024)
+
+* allow calling KlipperScreen panels from gcode
+* bed_mesh: automatically call for z_tilt or quad_level if not applied
+* show battery status in the topbar
+* macros: keyboard to keypad input switch with auto pre-selection
+
+## v0.4.4  (Sep 16, 2024)
+* support for different moonraker routes
 * allow showing/hiding cursor from the settings
 * some wpa-eap support, adds the security type selector and user field
 * extrude: wait for temp or open temp panel automatically close #1416
@@ -18,7 +32,7 @@ This just tracks the most notable changes, if you want all the details checkout 
 * gcodes: add extra info to confirm print
 * zcalibrate: add a dropdown with the function name to select
 * job_status: auto-estimated time: use last print time if available
-* gcodes: add option to delete in the confirm
+* gcodes: add option to delete in the confirmation
 
 ## v0.4.2  (Jun 10, 2024)
 * job_status: remove the status message and use the titlebar for that
@@ -84,7 +98,7 @@ This just tracks the most notable changes, if you want all the details checkout 
 * add moonraker warnings
 
 ## v0.3.6  (Sep 24, 2023)
-* Led light control, close #991 (#1106)
+* LED light control, close #991 (#1106)
 * pause will auto-open extrude
 * macros: hide the panel if there are no elegible macros
 * job_status: click thumbnail for fullscreen thumbnail
@@ -255,7 +269,7 @@ The Project changed maintainer [alfrix](github.com/alfrix)
 
 ## v0.1.4  (Feb 15, 2021)
 * network: Show wifi information
-* screen_panel: Put icons on a side bar instead of on the header
+* screen_panel: Put icons on a sidebar instead of on the header
 * printer: Include quad_gantry_level
 * wifi: Initial wifi class
 * job_status/settings: Allow different file estimation methods

@@ -66,6 +66,7 @@ button.invalid:active,
     background-color: #424242;
 }
 
+.active image,
 button.update {
     color: #2196f3;
     background-color: #121212;
@@ -91,6 +92,12 @@ combobox menuitem {
     border-color: #121212;
 }
 
+button.menu_active {
+    border-width: 0.25em;
+    border-style: solid;
+    border-color: #006412;
+}
+
 treeview.view check,
 switch {
     background-color: #1c1c1c;
@@ -99,6 +106,10 @@ switch {
 treeview.view check:checked,
 switch:checked {
     background-color: #2f5631;
+}
+
+treeview.view check:checked {
+    -gtk-icon-source: url("./styles/material-darker/images/complete.svg");
 }
 
 label {

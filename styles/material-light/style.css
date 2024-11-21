@@ -31,6 +31,7 @@ button label{
     color: @text;
 }
 
+.active image,
 button:active {
     background-color: @active;
 }
@@ -122,6 +123,10 @@ switch:checked {
     background-color: @color3;
 }
 
+treeview.view check:checked {
+    -gtk-icon-source: url("./styles/material-light/images/complete.svg");
+}
+
 treeview.view check,
 switch slider,
 scale trough,
@@ -142,6 +147,15 @@ label {
 menu {
     background-color: @bg;
     border-color: @border;
+}
+
+button.menu_active {
+    border-color: @border;
+    border-style: solid;
+    border-width: .25em;
+    background-color: @bg;
+    box-shadow: .1em .1em @border;
+    border-radius: 1em;
 }
 
 menuitem {
