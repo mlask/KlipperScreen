@@ -1,4 +1,5 @@
 import logging
+
 import gi
 
 gi.require_version("Gtk", "3.0")
@@ -169,6 +170,7 @@ class Panel(ScreenPanel):
                 else:
                     logging.info(f"Unknown heater: {heater}")
                     self._screen.show_popup_message(_("Unknown Heater") + " " + heater)
+                self._printer.set_stat(heater, {"target": target})
                 logging.info(f"Setting {heater} to {target}")
 
     def update_graph_visibility(self, force_hide=False):
@@ -478,6 +480,7 @@ class Panel(ScreenPanel):
             self._screen.show_popup_message(
                 _("Unknown Heater") + " " + self.active_heater
             )
+        self._printer.set_stat(name, {"target": temp})
 
     def verify_max_temp(self, temp):
         temp = int(temp)

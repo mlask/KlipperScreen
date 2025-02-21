@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KlipperScreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-09 18:08-0300\n"
-"PO-Revision-Date: 2024-11-13 17:00+0000\n"
-"Last-Translator: Владимир Чернояров <s3mpau@gmail.com>\n"
+"POT-Creation-Date: 2024-11-26 12:31-0300\n"
+"PO-Revision-Date: 2025-01-31 11:01+0000\n"
+"Last-Translator: gfbdrgng <hnaofegnp@hldrive.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/klipperscreen/"
 "klipperscreen/ru/>\n"
 "Language: ru\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.9-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 "X-Poedit-Flags-xgettext: --add-comments\n"
 
 #, python-format
@@ -140,9 +140,8 @@ msgstr "Отмена"
 msgid "Cannot connect to Moonraker"
 msgstr "Не удается подключиться к Moonraker"
 
-#, fuzzy
 msgid "Changes how the interface looks"
-msgstr "Изменение внешнего вида интерфейса"
+msgstr "Меняет внешний вид интерфейса"
 
 msgid "Changes how the time remaining is calculated"
 msgstr "Изменить расчет оставшегося времени"
@@ -196,7 +195,6 @@ msgstr "Не удалось добавить сеть"
 msgid "Current"
 msgstr "Текущий"
 
-#, fuzzy
 msgid "Current percentage and graph line"
 msgstr "Текущий процент и линия графика"
 
@@ -247,7 +245,6 @@ msgstr "Включить управление питанием дисплея"
 msgid "Error"
 msgstr "Ошибка"
 
-#, fuzzy
 msgid "Error clearing active spool"
 msgstr "Ошибка при очистке активной катушки"
 
@@ -429,7 +426,7 @@ msgid "Invalid temperature"
 msgstr "Недопустимая температура"
 
 msgid "Inversely affects the icon size"
-msgstr ""
+msgstr "Обратное влияние на размер иконки"
 
 msgid "Invert X"
 msgstr "Инверсия X"
@@ -504,6 +501,9 @@ msgstr "Загрузить"
 
 msgid "Loading..."
 msgstr "Загрузка..."
+
+msgid "Lock"
+msgstr "Замок"
 
 msgid "Lost Connection to Moonraker"
 msgstr "Потеряно соединение с Moonraker"
@@ -644,10 +644,8 @@ msgstr[2] "Пакеты будут обновляться"
 msgid "Part Fan"
 msgstr "Вентилятор обдува детали"
 
-#, fuzzy
-#| msgid "Password saved"
 msgid "Password"
-msgstr "Пароль сохранен"
+msgstr "Пароль"
 
 msgid "Password saved"
 msgstr "Пароль сохранен"
@@ -837,7 +835,7 @@ msgid "Small"
 msgstr "Маленький"
 
 msgid "Smooth time"
-msgstr ""
+msgstr "Ровное время"
 
 msgid "Speed (mm/s)"
 msgstr "Скорость (мм/с)"
@@ -919,6 +917,12 @@ msgstr "Неизвестный тип шифрования"
 msgid "Unload"
 msgstr "Выгрузить"
 
+msgid "Unlock"
+msgstr "Разблокировать"
+
+msgid "Unlock failed"
+msgstr "Разблокировка не удалась"
+
 msgid "Unretract Extra Length"
 msgstr "Дополнительная длина подачи перед возобновлением печати"
 
@@ -980,8 +984,9 @@ msgstr[0] "день"
 msgstr[1] "дней"
 msgstr[2] "дней"
 
+#, fuzzy
 msgid "g"
-msgstr ""
+msgstr "g"
 
 msgid "hour"
 msgid_plural "hours"
@@ -1014,7 +1019,7 @@ msgid "mm³/s"
 msgstr "мм³/с"
 
 msgid "s"
-msgstr ""
+msgstr "с"
 
 msgid "second"
 msgid_plural "seconds"
